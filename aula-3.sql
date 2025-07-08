@@ -6,20 +6,20 @@ group by idioma;
 
 -- view
 -- lista a quantidade de livros por idioma.
-create view vw_livros_por_idioma as
+create view livros_por_idioma as
 select 
     idioma,
     count(*) as quantidade_livros
 from livros
 group by idioma;
 
-select * from vw_livros_por_idioma;
+select * from livros_por_idioma;
 
 select * from livros
 where idioma = 'Portuguese';
 
 -- visualização dos livros com seus respectivos autores e gêneros
-create view vw_livros_detalhados as
+create view livros_detalhados as
 select 
     l.id as livro_id,
     l.nome as nome_livro,
@@ -32,10 +32,10 @@ from livros l
 join autores a on l.autor_id = a.id
 join generos g on l.genero_id = g.id;
 
-select * from vw_livros_detalhados;
+select * from livros_detalhados;
 
 -- quantos comentários cada livro recebeu.
-create view vw_comentarios_por_livro as
+create view comentarios_por_livro as
 select 
     l.nome as nome_livro,
     count(c.id) as quantidade_comentarios
@@ -43,10 +43,10 @@ from livros l
 left join comentarios c on l.id = c.livro_id
 group by l.id, l.nome;
 
-select * from vw_comentarios_por_livro;
+select * from comentarios_por_livro;
 
 -- ordenado pela quantidade
-select * from vw_comentarios_por_livro
+select * from comentarios_por_livro
 order by quantidade_comentarios desc;
 
 --
@@ -57,7 +57,7 @@ order by quantidade_comentarios desc;
 select id, nome, vendas from livros where id = 42;
 
 
-
+-- Procedures
 delimiter //
 
 create procedure atualizar_venda_livro(
@@ -96,4 +96,4 @@ call inserir_comentario_livro(42, 'joão', 'silva', 'ótimo livro, recomendo!');
 select * from comentarios order by id desc;
 
 
--- drop procedure atualizar_vendas_livro;
+-- drop procedure nome_procedure;
